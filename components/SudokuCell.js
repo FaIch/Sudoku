@@ -1,53 +1,56 @@
-import React, { useState } from 'react';
-import { Text, TextInput, View, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const SudokuCell = ({ initialNumber }) => {
-    const [number, setNumber] = useState(initialNumber);
-    const [isHighlighted, setIsHighlighted] = useState(false);
-
-    const isEditable = initialNumber === 0;
-
-    const toggleHighlight = () => {
-        if (isEditable) {
-            setIsHighlighted(!isHighlighted);
-        }
-    };
+const SudokuCell = ({ initialNumber, isSelected, onSelect, isHighlighted, initialBoard, row, col }) => {
+    const isEditable = initialBoard[row][col] === 0;
 
     return (
-        <TouchableOpacity style={styles.cell} onPress={toggleHighlight}>
-            {isEditable ? (
-                <TextInput
-                    style={[styles.input, isHighlighted ? styles.highlighted : {}]}
-                    keyboardType="numeric"
-                    maxLength={1}
-                    value={number ? number.toString() : ""}
-                    onChangeText={(text) => setNumber(parseInt(text))}
-                />
-            ) : (
-                <Text style={styles.number}>{number}</Text>
-            )}
+        <TouchableOpacity
+            style={[
+                styles.cell,
+                isSelected ? styles.selected : {},
+                isHighlighted ? styles.highlighted : {},
+                !isEditable ? styles.immutableNumber : {}
+            ]}
+            onPress={isEditable ? onSelect : null}
+            disabled={!isEditable}
+        >
+            <Text style={[
+                styles.number,
+            ]}>
+                {initialNumber !== 0 ? initialNumber : ""}
+            </Text>
         </TouchableOpacity>
     );
 };
+
+
+
 
 const styles = StyleSheet.create({
     cell: {
         borderWidth: 1,
         borderColor: '#000',
-        width: 30,
-        height: 30,
+        width: 40,
+        height: 40,
         alignItems: 'center',
         justifyContent: 'center',
     },
     input: {
-        fontSize: 18,
-        textAlign: 'center',
+        fontSize: 24,
+
+    },
+    immutableNumber: {
+        backgroundColor: 'grey'
     },
     highlighted: {
         backgroundColor: 'yellow',
     },
     number: {
-        fontSize: 18,
+        fontSize: 24,
+    },
+    selected: {
+      backgroundColor: 'lightblue'
     },
 });
 
