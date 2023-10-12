@@ -48,25 +48,25 @@ function MainScreen({ navigation }) {
         <View style={styles.container}>
             <Text style={styles.header}>Sudoku</Text>
             <TouchableOpacity
-                style={styles.button}
+                style={[styles.button, styles.startButton]}
                 onPress={() => navigation.navigate('Difficulty')}
             >
                 <Text style={styles.buttonText}>{t('start')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={styles.button}
+                style={[styles.button, styles.generateButton]}
                 onPress={fetchNewBoard}
             >
                 <Text style={styles.buttonText}>{t('generate')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={styles.button}
+                style={[styles.button, styles.howToPlayButton]}
                 onPress={() => navigation.navigate('HowToPlay')}
             >
                 <Text style={styles.buttonText}>{t('howtoplay')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={styles.button}
+                style={[styles.button, styles.settingsButton]}
                 onPress={() => setModalVisible(true)}
             >
                 <Text style={styles.buttonText}>{t('settings')}</Text>
@@ -111,20 +111,32 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     header: {
-        fontSize: 32,
+        fontSize: 40,
         marginBottom: 20,
     },
     button: {
         backgroundColor: '#ddd',
         borderRadius: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        width: 250,
+        height: 80,
         marginVertical: 10,
         alignItems: 'center',
         justifyContent: 'center',
     },
+    startButton:{
+        backgroundColor: '#d0e9c6',
+    },
+    generateButton:{
+        backgroundColor: '#d9edf7',
+    },
+    howToPlayButton:{
+        backgroundColor: '#fcf8e3',
+    },
+    settingsButton:{
+        backgroundColor: '#f2dede',
+    },
     buttonText: {
-        fontSize: 18,
+        fontSize: 24,
     },
     centeredView: {
         flex: 1,
@@ -147,12 +159,14 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     modalButton: {
-        paddingVertical: 5,
-        paddingHorizontal: 20,
+        height: 40,
+        width: 100,
         margin: 7,
         borderWidth: 1,
         borderRadius: 10,
-        backgroundColor: "#e8e8e8"
+        backgroundColor: "#e8e8e8",
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     modalButtonText: {
         fontSize: 20
