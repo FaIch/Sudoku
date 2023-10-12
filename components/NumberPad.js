@@ -1,7 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 const NumberPad = ({ onNumberInput, onHighlight, onDelete }) => {
+    const { t } = useTranslation();
+
     return (
         <View style={styles.numberPad}>
             <View style={styles.numbersRow}>
@@ -20,13 +23,13 @@ const NumberPad = ({ onNumberInput, onHighlight, onDelete }) => {
                     style={styles.button}
                     onPress={onDelete}
                 >
-                    <Text style={styles.buttonText}>Clear</Text>
+                    <Text style={styles.buttonText}>{t('clear')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.button}
                     onPress={onHighlight}
                 >
-                    <Text style={styles.buttonText}>Highlight</Text>
+                    <Text style={styles.buttonText}>{t('highlight')}</Text>
                 </TouchableOpacity>
             </View>
         </View>

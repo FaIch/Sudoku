@@ -3,8 +3,10 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import SudokuBoardComponent from '../components/SudokuBoardComponent';
 import NumberPad from '../components/NumberPad';
 import sudokuBoards from '../assets/data/sudokuBoards.json';
+import { useTranslation } from 'react-i18next';
 
 function GameScreen({ route }) {
+    const { t } = useTranslation();
     const { difficulty } = route.params;
     const board = sudokuBoards[difficulty].board;
     const solutionBoard = sudokuBoards[difficulty].solution;
@@ -16,7 +18,7 @@ function GameScreen({ route }) {
     );
 
     const handleNumberInput = (num) => {
-        if (selectedCell && initialBoard[selectedCell.row][selectedCell.col] === 0) {
+        if (isValidCell()) {
             const newUserBoard = JSON.parse(JSON.stringify(userBoard));
             newUserBoard[selectedCell.row][selectedCell.col] = num;
             setUserBoard(newUserBoard);
@@ -24,7 +26,7 @@ function GameScreen({ route }) {
     };
 
     const handleHighlight = () => {
-        if (selectedCell && initialBoard[selectedCell.row][selectedCell.col] === 0) {
+        if (isValidCell()) {
             const newHighlightedCells = JSON.parse(JSON.stringify(highlightedCells));
             newHighlightedCells[selectedCell.row][selectedCell.col] = !newHighlightedCells[selectedCell.row][selectedCell.col];
             setHighlightedCells(newHighlightedCells);
@@ -32,7 +34,7 @@ function GameScreen({ route }) {
     };
 
     const handleDelete = () => {
-        if (selectedCell && initialBoard[selectedCell.row][selectedCell.col] === 0) {
+        if (isValidCell()) {
             const newUserBoard = JSON.parse(JSON.stringify(userBoard));
             newUserBoard[selectedCell.row][selectedCell.col] = 0;
             setUserBoard(newUserBoard);
@@ -43,19 +45,24 @@ function GameScreen({ route }) {
         for (let i = 0; i < 9; i++) {
             for (let j = 0; j < 9; j++){
                 if (userBoard[i][j] !== solutionBoard[i][j]) {
-                    alert("Solution is incorrect!");
+                    alert(t('incorrect'));
                     return false;
                 }
             }
         }
-        alert("Congratulations! Solution is correct!");
+        alert(t('correct'));
         return true;
+    }
+
+    const isValidCell = () => {
+        return !!(selectedCell && initialBoard[selectedCell.row][selectedCell.col] === 0);
+
     }
 
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Difficulty: {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}</Text>
+            <Text style={styles.title}>{t('difficulty')}: {t(difficulty)}</Text>
             <SudokuBoardComponent
                 board={userBoard}
                 initialBoard={initialBoard}
@@ -71,7 +78,7 @@ function GameScreen({ route }) {
                 />
             )}
             <TouchableOpacity onPress={checkSolution} style={styles.checkButton}>
-                <Text style={styles.checkButtonText}>Check</Text>
+                <Text style={styles.checkButtonText}>{t('check')}</Text>
             </TouchableOpacity>
         </View>
 
@@ -87,6 +94,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
+        marginBottom: 10
     },
     checkButton: {
         justifyContent: 'center',

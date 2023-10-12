@@ -1,0 +1,17 @@
+{
+  "welcome": "Welcome",
+  "difficulty": "Difficulty",
+  "easy": "Easy",
+  "medium": "Medium",
+  "hard": "Hard",
+  "start": "Start game",
+  "howtoplay": "How to play",
+  "clear": "Clear",
+  "highlight": "Highlight",
+  "check": "Check",
+  "settings": "Settings",
+  "choose_language": "Choose your language",
+  "cancel": "Cancel",
+  "correct": "Solution is correct! Well done",
+  "incorrect": "The solution is not correct :("
+}
