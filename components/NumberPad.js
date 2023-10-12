@@ -1,12 +1,21 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const NumberPad = ({ onNumberInput, onHighlight, onDelete }) => {
     const { t } = useTranslation();
 
     return (
         <View style={styles.numberPad}>
+            <View style={styles.controlsRow}>
+                <TouchableOpacity onPress={onDelete}>
+                    <Text style={styles.clearButtonText}>{t('clear')}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onHighlight}>
+                    <FontAwesome5 name="marker" size={26} color="#4e9bff"/>
+                </TouchableOpacity>
+            </View>
             <View style={styles.numbersRow}>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
                     <TouchableOpacity
@@ -18,20 +27,6 @@ const NumberPad = ({ onNumberInput, onHighlight, onDelete }) => {
                     </TouchableOpacity>
                 ))}
             </View>
-            <View style={styles.controlsRow}>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={onDelete}
-                >
-                    <Text style={styles.buttonText}>{t('clear')}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.button}
-                    onPress={onHighlight}
-                >
-                    <Text style={styles.buttonText}>{t('highlight')}</Text>
-                </TouchableOpacity>
-            </View>
         </View>
     );
 };
@@ -42,19 +37,28 @@ const styles = StyleSheet.create({
     },
     numbersRow: {
         flexDirection: 'row',
-        marginBottom: 10,
+        marginTop: 10,
     },
     controlsRow: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
     },
     button: {
         marginHorizontal: 5,
-        padding: 10,
+        paddingVertical: 5,
+        paddingHorizontal: 8,
         alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderRadius: 10
+    },
+    clearButtonText: {
+        fontSize: 18,
+        fontWeight: 500,
+        color: '#4e9bff'
     },
     buttonText: {
-        fontSize: 20,
+        fontSize: 26,
     },
 });
 

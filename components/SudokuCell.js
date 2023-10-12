@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
     },
     immutableNumber: {
-        backgroundColor: 'grey'
+        backgroundColor: 'lightgrey'
     },
     highlighted: {
         backgroundColor: 'yellow',

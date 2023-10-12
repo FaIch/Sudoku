@@ -62,6 +62,10 @@ function GameScreen({ route }) {
         }
     };
 
+    const handleReset = () => {
+        setUserBoard(initialBoard)
+    }
+
     const checkSolution = () => {
         for (let i = 0; i < 9; i++) {
             for (let j = 0; j < 9; j++){
@@ -91,16 +95,20 @@ function GameScreen({ route }) {
                 setSelectedCell={setSelectedCell}
                 highlightedCells={highlightedCells}
             />
-            {selectedCell && (
-                <NumberPad
-                    onNumberInput={handleNumberInput}
-                    onHighlight={handleHighlight}
-                    onDelete={handleDelete}
-                />
-            )}
-            <TouchableOpacity onPress={checkSolution} style={styles.checkButton}>
-                <Text style={styles.checkButtonText}>{t('check')}</Text>
-            </TouchableOpacity>
+            <NumberPad
+                onNumberInput={handleNumberInput}
+                onHighlight={handleHighlight}
+                onDelete={handleDelete}
+                onReset={handleReset}
+            />
+            <View style={styles.button_container}>
+                <TouchableOpacity onPress={handleReset} style={styles.button}>
+                    <Text style={styles.buttonText}>Reset</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={checkSolution} style={styles.button}>
+                    <Text style={styles.buttonText}>{t('check')}</Text>
+                </TouchableOpacity>
+            </View>
         </View>
 
     );
@@ -113,23 +121,26 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#fff',
     },
+    button_container: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
     title: {
         fontSize: 20,
         marginBottom: 10
     },
-    checkButton: {
+    button: {
         justifyContent: 'center',
         alignContent: 'center',
         borderStyle: 'solid',
         borderWidth: 1,
-        padding: 10,
+        padding: 5,
         borderRadius: 10,
         marginTop: 10,
-        backgroundColor: 'lightgreen'
     },
-    checkButtonText: {
+    buttonText: {
         fontSize: 20,
-
     }
 });
 
