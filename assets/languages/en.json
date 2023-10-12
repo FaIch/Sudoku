@@ -13,5 +13,6 @@
   "choose_language": "Choose your language",
   "cancel": "Cancel",
   "correct": "Solution is correct! Well done",
-  "incorrect": "The solution is not correct :("
+  "incorrect": "The solution is not correct :(",
+  "generate": "Add new board"
 }

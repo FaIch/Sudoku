@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Button, Modal} from 'react-native';
 import { useTranslation } from 'react-i18next';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 function MainScreen({ navigation }) {
@@ -11,6 +12,38 @@ function MainScreen({ navigation }) {
         i18n.changeLanguage(lng).then(() => setModalVisible(false));
     };
 
+    const fetchNewBoard = async () => {
+        try {
+            const apiResponse = await fetch("https://sudoku-api.vercel.app/api/dosuku");
+            const data = await apiResponse.json();
+
+            const { value, solution, difficulty } = data.newboard.grids[0];
+
+            const storedBoardsJson = await AsyncStorage.getItem('sudokuBoards');
+            let storedBoards = storedBoardsJson ? JSON.parse(storedBoardsJson) : {};
+
+            const difficulties = ['easy', 'medium', 'hard'];
+            difficulties.forEach(diff => {
+                if (!Array.isArray(storedBoards[diff])) {
+                    storedBoards[diff] = [];
+                }
+            });
+
+            const newBoard = {
+                board: value,
+                solution: solution
+            };
+
+            storedBoards[difficulty.toLowerCase()].push(newBoard);
+            await AsyncStorage.setItem('sudokuBoards', JSON.stringify(storedBoards));
+
+            alert("Created new " + difficulty + " board");
+        } catch (error) {
+            console.error("Error adding new board: ", error);
+        }
+    };
+
+
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Sudoku</Text>
@@ -19,6 +52,12 @@ function MainScreen({ navigation }) {
                 onPress={() => navigation.navigate('Difficulty')}
             >
                 <Text style={styles.buttonText}>{t('start')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={fetchNewBoard}
+            >
+                <Text style={styles.buttonText}>{t('generate')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.button}

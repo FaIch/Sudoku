@@ -13,5 +13,6 @@
   "choose_language": "Velg språk",
   "cancel": "Avbryt",
   "correct": "Løsningen er riktig, godt jobbet!",
-  "incorrect": "Løsningen er ikke riktig :("
+  "incorrect": "Løsningen er ikke riktig :(",
+  "generate": "Lag nytt brett"
 }
