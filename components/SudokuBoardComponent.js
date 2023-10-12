@@ -2,12 +2,16 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import SudokuCell from './SudokuCell';
 
-function SudokuBoardComponent({ board, initialBoard, selectedCell, setSelectedCell, highlightedCells }) {
+function SudokuBoardComponent({board, initialBoard, selectedCell, setSelectedCell, highlightedCells}) {
+    if (!board || board.length === 0 || !Array.isArray(board)) {
+        return null;
+    }
+
     return (
         <View style={styles.board}>
             {board.map((row, rowIndex) => (
                 <View key={rowIndex} style={styles.row}>
-                    {row.map((num, colIndex) => (
+                    {Array.isArray(row) && row.map((num, colIndex) => (
                         <SudokuCell
                             key={colIndex}
                             initialNumber={num}
@@ -24,6 +28,7 @@ function SudokuBoardComponent({ board, initialBoard, selectedCell, setSelectedCe
         </View>
     );
 }
+
 
 
 const styles = StyleSheet.create({

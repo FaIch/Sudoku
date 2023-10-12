@@ -1,21 +1,43 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import SudokuBoardComponent from '../components/SudokuBoardComponent';
 import NumberPad from '../components/NumberPad';
-import sudokuBoards from '../assets/data/sudokuBoards.json';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
 
 function GameScreen({ route }) {
     const { t } = useTranslation();
     const { difficulty } = route.params;
-    const board = sudokuBoards[difficulty].board;
-    const solutionBoard = sudokuBoards[difficulty].solution;
     const [selectedCell, setSelectedCell] = useState(null);
-    const [initialBoard] = useState(board);
-    const [userBoard, setUserBoard] = useState(board);
+    const [initialBoard, setInitialBoard] = useState([]);
+    const [solutionBoard, setSolutionBoard] = useState([]);
+    const [userBoard, setUserBoard] = useState();
     const [highlightedCells, setHighlightedCells] = useState(
         new Array(9).fill(null).map(() => new Array(9).fill(false))
     );
+
+    useEffect(() => {
+        // Define an async function
+        const fetchBoards = async () => {
+            try {
+                // Get stored boards from AsyncStorage
+                const storedBoardsString = await AsyncStorage.getItem('sudokuBoards');
+                if (storedBoardsString) {
+                    const storedBoards = JSON.parse(storedBoardsString);
+
+                    // Set the boards in the state
+                    setInitialBoard(storedBoards[difficulty].board);
+                    setSolutionBoard(storedBoards[difficulty].solution);
+                    setUserBoard(storedBoards[difficulty].board);
+                }
+            } catch (error) {
+                console.error("Failed to fetch the board:", error);
+            }
+        };
+
+        // Call the async function
+        fetchBoards();
+    }, [difficulty]);
 
     const handleNumberInput = (num) => {
         if (isValidCell()) {
