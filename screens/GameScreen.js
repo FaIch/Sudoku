@@ -20,22 +20,22 @@ function GameScreen({ route }) {
         // Define an async function
         const fetchBoards = async () => {
             try {
-                // Get stored boards from AsyncStorage
                 const storedBoardsString = await AsyncStorage.getItem('sudokuBoards');
                 if (storedBoardsString) {
                     const storedBoards = JSON.parse(storedBoardsString);
 
-                    // Set the boards in the state
-                    setInitialBoard(storedBoards[difficulty].board);
-                    setSolutionBoard(storedBoards[difficulty].solution);
-                    setUserBoard(storedBoards[difficulty].board);
+                    const randomIndex = Math.floor(Math.random() * storedBoards[difficulty].length);
+                    const selectedBoard = storedBoards[difficulty][randomIndex];
+
+                    setInitialBoard(selectedBoard.board);
+                    setSolutionBoard(selectedBoard.solution);
+                    setUserBoard(selectedBoard.board);
                 }
             } catch (error) {
                 console.error("Failed to fetch the board:", error);
             }
         };
 
-        // Call the async function
         fetchBoards();
     }, [difficulty]);
 
