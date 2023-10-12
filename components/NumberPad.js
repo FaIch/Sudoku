@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { FontAwesome5 } from '@expo/vector-icons';
+import '../translation';
 
 const NumberPad = ({ onNumberInput, onHighlight, onDelete }) => {
     const { t } = useTranslation();

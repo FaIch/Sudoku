@@ -1,4 +1,4 @@
-{
+export default {
   "welcome": "Velkommen",
   "difficulty": "Vanskelighetsgrad",
   "easy": "Lett",
@@ -15,4 +15,4 @@
   "correct": "Løsningen er riktig, godt jobbet!",
   "incorrect": "Løsningen er ikke riktig :(",
   "generate": "Lag nytt brett"
-}
+};

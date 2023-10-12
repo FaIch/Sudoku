@@ -4,6 +4,7 @@ import SudokuBoardComponent from '../components/SudokuBoardComponent';
 import NumberPad from '../components/NumberPad';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
+import '../translation';
 
 function GameScreen({ route }) {
     const { t } = useTranslation();

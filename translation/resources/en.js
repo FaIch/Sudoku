@@ -1,4 +1,4 @@
-{
+export default{
   "welcome": "Welcome",
   "difficulty": "Difficulty",
   "easy": "Easy",
@@ -15,4 +15,4 @@
   "correct": "Solution is correct! Well done",
   "incorrect": "The solution is not correct :(",
   "generate": "Add new board"
-}
+};

@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import { useTranslation } from 'react-i18next';
+import '../translation';
 
 function DifficultyScreen({ navigation }) {
     const { t } = useTranslation();
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 26,
-        fontWeight: 450,
+        fontWeight: 500,
         color: '#000',
     },
 });
