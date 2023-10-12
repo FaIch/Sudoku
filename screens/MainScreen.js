@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 40,
         marginBottom: 20,
+        fontWeight: 'bold'
     },
     button: {
         backgroundColor: '#ddd',
@@ -137,6 +138,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 24,
+        fontWeight: 450
     },
     centeredView: {
         flex: 1,

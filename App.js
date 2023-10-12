@@ -23,6 +23,7 @@ export default function App() {
                     // If not, store the default boards from JSON file
                     await AsyncStorage.setItem('sudokuBoards', JSON.stringify(sudokuBoards));
                 }
+                console.log(storedBoards)
             } catch (error) {
                 console.error("Failed to initialize boards:", error);
             }

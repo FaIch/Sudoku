@@ -17,7 +17,6 @@ function GameScreen({ route }) {
     );
 
     useEffect(() => {
-        // Define an async function
         const fetchBoards = async () => {
             try {
                 const storedBoardsString = await AsyncStorage.getItem('sudokuBoards');
