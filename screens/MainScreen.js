@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Button, Modal} from 'react-nat
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import '../translation';
+import LanguageModal from "../components/LanguageModal";
 
 
 function MainScreen({ navigation }) {
@@ -73,32 +74,11 @@ function MainScreen({ navigation }) {
                 <Text style={styles.buttonText}>{t('settings')}</Text>
             </TouchableOpacity>
 
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                }}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text style={styles.modalText}>{t('choose_language')}</Text>
-
-                        <TouchableOpacity style={styles.modalButton} onPress={() => changeLanguage('en')}>
-                            <Text style={styles.modalButtonText}>English</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.modalButton} onPress={() => changeLanguage('no')}>
-                            <Text style={styles.modalButtonText}>Norsk</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.modalButton} onPress={() => setModalVisible(false)}>
-                            <Text style={styles.modalButtonText}>{t('cancel')}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
+            <LanguageModal
+                isVisible={modalVisible}
+                onClose={() => setModalVisible(false)}
+                onChangeLanguage={changeLanguage}
+            />
 
         </View>
     );
@@ -139,44 +119,6 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 24,
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 60,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    modalButton: {
-        height: 40,
-        width: 100,
-        margin: 7,
-        borderWidth: 1,
-        borderRadius: 10,
-        backgroundColor: "#e8e8e8",
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    modalButtonText: {
-        fontSize: 20
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
-        fontSize: 30
     },
 });
 

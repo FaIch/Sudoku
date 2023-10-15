@@ -19,7 +19,6 @@ export default function App() {
                 if (!storedBoards) {
                     await AsyncStorage.setItem('sudokuBoards', JSON.stringify(sudokuBoards));
                 }
-                console.log(storedBoards)
             } catch (error) {
                 console.error("Failed to initialize boards:", error);
             }
