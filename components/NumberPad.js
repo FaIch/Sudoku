@@ -11,10 +11,10 @@ const NumberPad = ({ onNumberInput, onHighlight, onDelete }) => {
         <View style={styles.numberPad}>
             <View style={styles.controlsRow}>
                 <TouchableOpacity onPress={onDelete}>
-                    <Text style={styles.clearButtonText}>{t('clear')}</Text>
+                    <FontAwesome5 name="eraser" size={26} color="#4e9bff"/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onHighlight}>
-                    <FontAwesome5 name="marker" size={26} color="#4e9bff"/>
+                    <FontAwesome5 name="font-awesome-flag" size={26} color="#4e9bff"/>
                 </TouchableOpacity>
             </View>
             <View style={styles.numbersRow}>
@@ -52,11 +52,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderWidth: 1,
         borderRadius: 10
-    },
-    clearButtonText: {
-        fontSize: 18,
-        fontWeight: 500,
-        color: '#4e9bff'
     },
     buttonText: {
         fontSize: 26,

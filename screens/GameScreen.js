@@ -16,6 +16,7 @@ function GameScreen({ route }) {
     const [highlightedCells, setHighlightedCells] = useState(
         new Array(9).fill(null).map(() => new Array(9).fill(false))
     );
+    const [errorBlock, setErrorBlock] = useState(null);
 
     useEffect(() => {
         const fetchBoards = async () => {
@@ -67,20 +68,41 @@ function GameScreen({ route }) {
         setUserBoard(initialBoard)
     }
 
+    const flashErrorBlock = (block) => {
+        let flashCount = 0;
+        const flashInterval = setInterval(() => {
+            setErrorBlock(flashCount % 2 === 0 ? block : null);
+            flashCount++;
+            if (flashCount > 5) {
+                clearInterval(flashInterval);
+                setErrorBlock(null);
+            }
+        }, 300);
+    };
+
+    const alertCorrectSolution = () => {
+        alert(t('correct'));
+    }
+
     const checkSolution = () => {
+        let isSolutionCorrect = true;
+
         for (let i = 0; i < 9; i++) {
             for (let j = 0; j < 9; j++){
                 if (userBoard[i][j] !== solutionBoard[i][j]) {
-                    alert(t('incorrect'));
-                    return false;
+                    isSolutionCorrect = false;
+                    const blockStartRow = Math.floor(i / 3) * 3;
+                    const blockStartCol = Math.floor(j / 3) * 3;
+                    flashErrorBlock({row: blockStartRow, col: blockStartCol});
+                    return;
                 }
             }
         }
-        alert(t('correct'));
-        return true;
+        alertCorrectSolution();
     }
 
-    const isValidCell = () => {
+
+        const isValidCell = () => {
         return !!(selectedCell && initialBoard[selectedCell.row][selectedCell.col] === 0);
 
     }
@@ -95,6 +117,7 @@ function GameScreen({ route }) {
                 selectedCell={selectedCell}
                 setSelectedCell={setSelectedCell}
                 highlightedCells={highlightedCells}
+                errorBlock={errorBlock}
             />
             <NumberPad
                 onNumberInput={handleNumberInput}
@@ -123,8 +146,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     button_container: {
-        width: '100%',
+        width: '98%',
         flexDirection: 'row',
+        marginTop: 30,
         justifyContent: 'space-between'
     },
     title: {

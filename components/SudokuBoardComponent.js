@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import SudokuCell from './SudokuCell';
 
-function SudokuBoardComponent({board, initialBoard, selectedCell, setSelectedCell, highlightedCells}) {
+function SudokuBoardComponent({board, initialBoard, selectedCell, setSelectedCell, highlightedCells, errorBlock}) {
     if (!board || board.length === 0 || !Array.isArray(board)) {
         return null;
     }
@@ -21,6 +21,9 @@ function SudokuBoardComponent({board, initialBoard, selectedCell, setSelectedCel
                             initialBoard={initialBoard}
                             row={rowIndex}
                             col={colIndex}
+                            errorBlock={errorBlock}
+                            thickBorderLeft={colIndex % 3 === 0 && colIndex !== 0}
+                            thickBorderTop={rowIndex % 3 === 0 && rowIndex !== 0}
                         />
                     ))}
                 </View>
