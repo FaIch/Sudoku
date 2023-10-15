@@ -23,6 +23,8 @@ export default {
   "how_rules_3": "3. De 3×3 rutenettene som danner det større rutenettet må også inneholde tallene 1 til 9 uten gjentakelse.",
   "how_eraser": " Viskelær-ikonet brukes til å fjerne tallet som er i en rute.",
   "how_flag": " Flag-ikonet brukes til å markere en rute dersom du er usikker på om tallet i ruten er riktig.",
+  "how_reset": "Trykk på 'Reset' knappen for å fjerne tall i alle ruter.",
+  "how_check": "Trykk på 'Sjekk' knappen for å sjekke om din løsinng er korrekt, og få en pekepinn på hvor det ligger en feil dersom ikke alt er riktig.",
   "help_header": "Trinn for å Løse Sudoku:",
   "help_1": "1. Start med å fokusere på rader, kolonner og 3×3-ruter som har flere tall allerede fylt inn.",
   "help_2": "2. Bruk logikk for å utlede mulighetene for gjenværende ruter.",

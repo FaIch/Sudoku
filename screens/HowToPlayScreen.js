@@ -31,6 +31,12 @@ function HowToPlayScreen() {
                 <FontAwesome5 name="font-awesome-flag"  size={24} color="#4e9bff"/>
                 {t('how_flag')}
             </Text>
+            <Text style={styles.text}>
+                {t('how_reset')}
+            </Text>
+            <Text style={styles.text}>
+                {t('how_check')}
+            </Text>
             <Text style={styles.subHeader}>{t('help_header')}</Text>
             <Text style={styles.text}>
                 {t('help_1')}
