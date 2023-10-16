@@ -40,6 +40,12 @@ npx expo start
 
 Follow the instructions in the terminal to open the application on your mobile device.
 
+### Launching the application on an Android Emulator
+
+- Make sure that your Android Emulator is launched
+- Follow the steps under the 'Installation' section
+- Press 'a' to launch the Sudoku app on your Android Emulator, the application will find your emulator automatically
+
 ## Usage
 
 - Set your preferred language in the 'Settings' tab.
