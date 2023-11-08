@@ -15,6 +15,7 @@ export default {
   "correct": "Løsningen er riktig, godt jobbet!",
   "incorrect": "Løsningen er ikke riktig :(",
   "generate": "Lag nytt brett",
+  "newboard": "Nytt brett laget",
   "how_title": "Hvordan Spille Sudoku",
   "how_intro": "Sudoku er en logikkbasert tallplasseringspuslespill. Målet er å fylle en 9×9-rutenett med sifre slik at hver kolonne, hver rad og hver av de ni 3×3-undernettene som utgjør rutenettet inneholder alle sifrene fra 1 til 9.",
   "how_rules": "Regler:",

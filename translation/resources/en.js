@@ -15,6 +15,7 @@ export default{
   "correct": "Solution is correct! Well done",
   "incorrect": "The solution is not correct :(",
   "generate": "Add new board",
+  "newboard": "New board created",
   "how_title": "How To Play Sudoku",
   "how_intro": "Sudoku is a logic-based number-placement puzzle. The objective is to fill a 9×9 grid with digits so that each column, each row, and each of the nine 3×3 subgrids that compose the grid contain all of the digits from 1 to 9.",
   "how_rules": "Rules:",

@@ -1,45 +1,53 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Button, Modal} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getSudoku } from 'sudoku-gen';
 import '../translation';
 import LanguageModal from "../components/LanguageModal";
+import DifficultyModal from "../components/DifficultyModal";
+import Toast from 'react-native-toast-message';
 
 
 function MainScreen({ navigation }) {
     const { t, i18n } = useTranslation();
-    const [modalVisible, setModalVisible] = useState(false);
+    const [languageModalVisible, setLanguageModalVisible] = useState(false);
+    const [difficultyModalVisible, setDifficultyModalVisible] = useState(false)
 
     const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng).then(() => setModalVisible(false));
+        i18n.changeLanguage(lng).then(() => setLanguageModalVisible(false));
     };
 
-    const fetchNewBoard = async () => {
+    const fetchNewBoard = async (selectedDifficulty) => {
         try {
-            const apiResponse = await fetch("https://sudoku-api.vercel.app/api/dosuku");
-            const data = await apiResponse.json();
+            const { puzzle, solution, difficulty } = getSudoku(selectedDifficulty);
 
-            const { value, solution, difficulty } = data.newboard.grids[0];
+            const formattedBoard = puzzle.split('').map(val => (val === '-' ? 0 : parseInt(val)));
+            const formattedSolution = solution.split('').map(val => parseInt(val));
+
+            const board = [];
+            const solutionBoard = [];
+            while(formattedBoard.length) board.push(formattedBoard.splice(0, 9));
+            while(formattedSolution.length) solutionBoard.push(formattedSolution.splice(0, 9));
 
             const storedBoardsJson = await AsyncStorage.getItem('sudokuBoards');
             let storedBoards = storedBoardsJson ? JSON.parse(storedBoardsJson) : {};
 
-            const difficulties = ['easy', 'medium', 'hard'];
-            difficulties.forEach(diff => {
-                if (!Array.isArray(storedBoards[diff])) {
-                    storedBoards[diff] = [];
-                }
-            });
-
             const newBoard = {
-                board: value,
-                solution: solution
+                board: board,
+                solution: solutionBoard
             };
 
-            storedBoards[difficulty.toLowerCase()].push(newBoard);
+            storedBoards[difficulty].push(newBoard);
             await AsyncStorage.setItem('sudokuBoards', JSON.stringify(storedBoards));
+            Toast.show({
+                type: 'success',
+                text1: t('newboard'),
+                position: 'bottom',
+                bottomOffset: 50,
+                visibilityTime: 2000
+            })
 
-            alert("Created new " + difficulty + " board");
         } catch (error) {
             console.error("Error adding new board: ", error);
         }
@@ -57,10 +65,18 @@ function MainScreen({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
                 style={[styles.button, styles.generateButton]}
-                onPress={fetchNewBoard}
+                onPress={() => setDifficultyModalVisible(true)}
             >
                 <Text style={styles.buttonText}>{t('generate')}</Text>
             </TouchableOpacity>
+            <DifficultyModal
+                isVisible={difficultyModalVisible}
+                onDifficultySelect={(difficulty) => {
+                    fetchNewBoard(difficulty);
+                    setDifficultyModalVisible(false);
+                }}
+                onClose={() => setDifficultyModalVisible(false)}
+            />
             <TouchableOpacity
                 style={[styles.button, styles.howToPlayButton]}
                 onPress={() => navigation.navigate('HowToPlay')}
@@ -69,17 +85,17 @@ function MainScreen({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
                 style={[styles.button, styles.settingsButton]}
-                onPress={() => setModalVisible(true)}
+                onPress={() => setLanguageModalVisible(true)}
             >
                 <Text style={styles.buttonText}>{t('settings')}</Text>
             </TouchableOpacity>
 
             <LanguageModal
-                isVisible={modalVisible}
-                onClose={() => setModalVisible(false)}
+                isVisible={languageModalVisible}
+                onClose={() => setLanguageModalVisible(false)}
                 onChangeLanguage={changeLanguage}
             />
-
+            <Toast/>
         </View>
     );
 }
